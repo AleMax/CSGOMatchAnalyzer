@@ -14,14 +14,20 @@ import datetime
 
 matches = JSONParser.read_json("res/matches.json")
 
-maps = Analyzer.map_ranking(matches)
-for map, count in sorted(maps.items(), key=lambda item: item[1]):
-    print(map + ": " + str(count))
+# maps = Analyzer.map_ranking(matches)
+# for map, count in sorted(maps.items(), key=lambda item: item[1]):
+#     print(map + ": " + str(count))
 
 # mates = Analyzer.teammate_ranking(matches, "https://steamcommunity.com/id/AleMax")
 # for mate, count in sorted(mates.items(), key=lambda item: item[1]):
 #     print(mate + ": " + str(count))
 
+# Analyzer.win_loss_count(matches, 184242319)
 
+# Analyzer.matches_by_month_csv(matches, "res/gamesPerMonth.csv")
+
+# Analyzer.matches_by_time_of_day_csv(matches, "res/gamesByTime.csv")
+
+Analyzer.wait_time_per_day_interpolated_csv(matches, "res/waitTime.csv")
 
 

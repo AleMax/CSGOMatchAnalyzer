@@ -31,10 +31,10 @@ class Match(object):
 
     def get_team_from_player(self, number):
         for player in self.team1.players:
-            if number == player.link:
+            if number == player.number:
                 return self.team1
         for player in self.team2.players:
-            if number == player.link:
+            if number == player.number:
                 return self.team2
         return None
 

@@ -74,7 +74,7 @@ def read_json(file):
             match.team2 = Match.Team()
 
             match.team1.score = m["team1"]["score"]
-            match.team1.won = m["team1"]["score"]
+            match.team1.won = m["team1"]["won"]
             players1 = m["team1"]["players"]
             for p in players1:
                 match.team1.players.append(Match.Player())
@@ -92,12 +92,13 @@ def read_json(file):
                 player.score = p["score"]
 
             match.team2.score = m["team2"]["score"]
-            match.team2.won = m["team2"]["score"]
+            match.team2.won = m["team2"]["won"]
             players2 = m["team2"]["players"]
             for p in players2:
                 match.team2.players.append(Match.Player())
                 player = match.team2.players[-1]
 
+                player.number = p["number"]
                 player.link = p["link"]
                 player.username = p["username"]
                 player.ping = p["ping"]
