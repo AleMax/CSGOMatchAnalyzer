@@ -3,6 +3,7 @@ import csv
 import math
 import datetime
 
+
 def map_ranking(matches):
     maps = {}
     for match in matches:
@@ -27,6 +28,22 @@ def teammate_ranking(matches, player_number):
         else:
             print("WEIRD MATCH CASE")
     return mates
+
+
+def enemy_ranking(matches, player_number):
+    enemies = {}
+    for match in matches:
+        team = match.get_other_team(match.get_team_from_player(player_number))
+        if team is not None:
+            for player in team.players:
+                if player.link in enemies:
+                    enemies[player.link] += 1
+                else:
+                    enemies[player.link] = 1
+        else:
+            print("WEIRD MATCH CASE")
+    return enemies
+
 
 def win_loss_count(matches, player_number):
     wins = 0
@@ -122,3 +139,43 @@ def wait_time_per_day_interpolated_csv(matches, filepath):
                 mo = "0" + mo
 
             writer.writerow([da + "." + mo + "." + yr, days[key]])
+
+
+def map_win_percentage_since(matches, player_number, timestamp):
+    maps = {}
+    for match in matches:
+        if match.timestamp > timestamp:
+            if match.map not in maps:
+                maps[match.map] = [0.0, 0.0]
+            maps[match.map][0] += match.get_team_from_player(player_number).score
+            maps[match.map][1] += match.get_other_team(player_number).score
+
+    for m in maps:
+        sum_of_rounds = (maps[m][0] + maps[m][1])
+        maps[m][0] /= sum_of_rounds
+        maps[m][1] /= sum_of_rounds
+
+    return maps
+
+
+def map_win_percentage_since_by_full_match(matches, player_number, timestamp):
+    maps = {}
+    for match in matches:
+        if match.timestamp > timestamp and match.has_player(292732268):
+            if match.map not in maps:
+                maps[match.map] = [0.0, 0.0, 0.0]
+            outcome = match.get_team_from_player(player_number).won
+            if outcome == 1:
+                maps[match.map][0] += 1
+            elif outcome == 0:
+                maps[match.map][1] += 1
+            elif outcome == -1:
+                maps[match.map][2] += 1
+
+    for m in maps:
+        sum_of_rounds = (maps[m][0] + maps[m][1] + maps[m][2])
+        maps[m][0] /= sum_of_rounds
+        maps[m][1] /= sum_of_rounds
+        maps[m][2] /= sum_of_rounds
+
+    return maps

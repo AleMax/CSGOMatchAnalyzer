@@ -84,7 +84,7 @@ def parse_from_html(file):
 
                     player_count += 1
 
-                elif "<tr><td colspan=\"8\" class=\"csgo_scoreboard_score\">" in lines[i + current_line_offset]:
+                elif "class=\"csgo_scoreboard_score\">" in lines[i + current_line_offset]:
                     scores = lines[i + current_line_offset].split(">")[2].split("<")[0]
                     match.team1.score = int(scores.split(" ")[0])
                     match.team2.score = int(scores.split(" ")[2])

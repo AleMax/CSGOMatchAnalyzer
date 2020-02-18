@@ -38,4 +38,15 @@ class Match(object):
                 return self.team2
         return None
 
+    def get_other_team(self, team):
+        if team is self.team1:
+            return self.team2
+        else:
+            return self.team1
+
+    def has_player(self, number):
+        if self.get_team_from_player(number) is None:
+            return False
+        else:
+            return True
 
