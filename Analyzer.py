@@ -161,7 +161,7 @@ def map_win_percentage_since(matches, player_number, timestamp):
 def map_win_percentage_since_by_full_match(matches, player_number, timestamp):
     maps = {}
     for match in matches:
-        if match.timestamp > timestamp and match.has_player(292732268):
+        if match.timestamp > timestamp:
             if match.map not in maps:
                 maps[match.map] = [0.0, 0.0, 0.0]
             outcome = match.get_team_from_player(player_number).won
@@ -173,9 +173,33 @@ def map_win_percentage_since_by_full_match(matches, player_number, timestamp):
                 maps[match.map][2] += 1
 
     for m in maps:
-        sum_of_rounds = (maps[m][0] + maps[m][1] + maps[m][2])
-        maps[m][0] /= sum_of_rounds
-        maps[m][1] /= sum_of_rounds
-        maps[m][2] /= sum_of_rounds
+        sum_of_matches = (maps[m][0] + maps[m][1] + maps[m][2])
+        maps[m][0] /= sum_of_matches
+        maps[m][1] /= sum_of_matches
+        maps[m][2] /= sum_of_matches
 
     return maps
+
+
+def win_percentage_with_player(matches, timestamp, player1, player2):
+    wins = 0.0
+    ties = 0.0
+    losses = 0.0
+    for match in matches:
+        if match.timestamp > timestamp and match.has_player(player1) and match.has_player(player2):
+            outcome = match.get_team_from_player(player1).won
+            if outcome == 1:
+                wins += 1
+            elif outcome == 0:
+                ties += 1
+            elif outcome == -1:
+                losses += 1
+
+    sum_of_matches = wins + ties + losses
+    wins /= sum_of_matches
+    ties /= sum_of_matches
+    losses /= sum_of_matches
+
+    print(str(round(wins * 10000) / 100) + "\t" + str(round(ties * 10000) / 100) + "\t"
+          + str(round(losses * 10000) / 100))
+    print(sum_of_matches)

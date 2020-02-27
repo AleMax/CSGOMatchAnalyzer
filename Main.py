@@ -38,9 +38,9 @@ matches = JSONParser.read_json("res/matches.json")
 # for m in maps:
 #     print(m + "\t" + str(round(maps[m][0] * 10000) / 100))
 
-maps = Analyzer.map_win_percentage_since_by_full_match(matches, 184242319, 1575162000)
-for m in maps:
-    print(m + "\t" + str(round(maps[m][0] * 10000) / 100) + "\t" + str(round(maps[m][1] * 10000) / 100) + "\t"
-          + str(round(maps[m][2] * 10000) / 100))
+# maps = Analyzer.map_win_percentage_since_by_full_match(matches, 184242319, 1575162000)
+# for m in maps:
+#     print(m + "\t" + str(round(maps[m][0] * 10000) / 100) + "\t" + str(round(maps[m][1] * 10000) / 100) + "\t"
+#           + str(round(maps[m][2] * 10000) / 100))
 
-
+Analyzer.win_percentage_with_player(matches, 1575162000, 184242319, 472843738)
